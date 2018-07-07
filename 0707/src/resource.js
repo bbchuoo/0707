@@ -24,6 +24,14 @@
 
 var res = {
     HelloWorld_png : "res/HelloWorld.png",
+    A_png : "res/A.png",
+    B_png : "res/B.png",
+    C_png : "res/C.png",
+    bg_jpg : "res/bg.jpg",
+    ball_png : "res/ball.png",
+    brick_png : "res/brick.png",
+    bullet_png : "res/bullet.png",
+
 };
 
 var g_resources = [];

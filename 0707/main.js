@@ -103,7 +103,7 @@ cc.game.onStart = function(){
     // The game will be resized when browser size change
     cc.view.resizeWithBrowserSize(true);
 
-    //load resources
+    //load resources 只有第一次執行的時候才用runScene
     cc.LoaderScene.preload(g_resources, function () {
         cc.director.runScene(new menuScene());
     }, this);
