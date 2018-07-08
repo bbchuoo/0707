@@ -1,4 +1,4 @@
-var Item7Layer = cc.Layer.extend({
+var item7Layer = cc.Layer.extend({
     ball:null,
     bricks:null,
     bricksRect:null,
@@ -8,7 +8,7 @@ var Item7Layer = cc.Layer.extend({
         this.ball = new Ball(res.ball_png);
         this.ball.x = cc.winSize.width/2;
         this.ball.y = cc.winSize.height/2;
-        this.ball.setXY(4,-6)
+        this.ball.setXY(4,4)
         this.addChild(this.ball);
 
         this.bricks = []; this.bricksRect = [];
@@ -41,31 +41,41 @@ var Item7Layer = cc.Layer.extend({
         var layer = this.getParent();
 
         for (var i=0; i<layer.bricks.length; i++){
-            if (cc.rectContainsPoint(
-                layer.bricksRect[i],
-                new cc.Point(this.x, this.y))){
 
-                if (this.y>=layer.bricks[i].y-layer.bricks[i].height &&
-                    this.y <= layer.bricks[i].y + layer.bricks[i].height){
-                    this.dy *= -1;
-                    layer.removeChild(layer.bricks[i]);
-                    layer.bricks.splice(i,1);
-                    layer.bricksRect.splice(i,1)
-                    break;
+            // 上下
+            if (
+                this.x<=layer.bricks[i].x+layer.bricks[i].width/2 &&
+                this.x>=layer.bricks[i].x-layer.bricks[i].width/2 &&
+                ((this.y>layer.bricks[i].y &&
+                        this.y-this.height/2<=layer.bricks[i].y+layer.bricks[i].height/2) ||
+                    (this.y<layer.bricks[i].y &&
+                        this.y+this.height/2>=layer.bricks[i].y-layer.bricks[i].height/2)
+                )){
+                layer.removeChild(layer.bricks[i]);
+                layer.bricks.splice(i,1);
+                this.dy *= -1;
+                break;
+            }
 
-                }else if (this.x>=layer.bricks[i].x-layer.bricks[i].width &&
-                    this.x <= layer.bricks[i].x + layer.bricks[i].width){
-                    this.dx *= -1;
-                    layer.removeChild(layer.bricks[i]);
-                    layer.bricks.splice(i,1);
-                    layer.bricksRect.splice(i,1)
-                    break;
+            //
+            if (
+                this.y<=layer.bricks[i].y+layer.bricks[i].height/2 &&
+                this.y>=layer.bricks[i].y-layer.bricks[i].height/2 &&
+                ((this.x>layer.bricks[i].x &&
+                        this.x-this.width/2<=layer.bricks[i].x+layer.bricks[i].width/2) ||
+                    (this.x<layer.bricks[i].x &&
+                        this.x+this.width/2>=layer.bricks[i].x-layer.bricks[i].width/2)
+                )){
 
-                }else{
-
-                }
+                layer.removeChild(layer.bricks[i]);
+                layer.bricks.splice(i,1);
+                this.dx *= -1;
+                break;
 
             }
+
+
+
         }
 
 
@@ -108,10 +118,10 @@ var Ball = cc.Sprite.extend({
 
 });
 
-var Item7Scene = cc.Scene.extend({
+var item7Scene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        var layer = new Item7Layer();
+        var layer = new item7Layer();
         this.addChild(layer);
     }
 });
